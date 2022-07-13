@@ -181,15 +181,16 @@ function updateSum() {
 
 
 function deleteTransaction(id) {
-    alert("Xóa rồi nhé !")
-    $.ajax({
-        type: "DELETE",
-        url: "http://localhost:8086/transactions/" + id,
-        success: function () {
+    if (confirm("Are you sure you want to delete this category ?")) {
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8086/transactions/" + id,
+            success: function () {
 
-            console.log("ok")
-            showAllTransaction()
+                console.log("ok")
+                showAllTransaction()
 
-        }
-    });
+            }
+        });
+    }
 }

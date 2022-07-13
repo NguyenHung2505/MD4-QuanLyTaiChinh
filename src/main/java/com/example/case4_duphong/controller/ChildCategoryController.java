@@ -2,6 +2,7 @@ package com.example.case4_duphong.controller;
 
 
 import com.example.case4_duphong.model.ChildCategory;
+import com.example.case4_duphong.model.ParentCategory;
 import com.example.case4_duphong.service.category.IChildCategoryService;
 import com.example.case4_duphong.service.category.IParentCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/child-categories")
+@RequestMapping("/categories")
 public class ChildCategoryController {
     @Autowired
     IChildCategoryService childCategoryService;
@@ -32,10 +33,10 @@ public class ChildCategoryController {
         return new ResponseEntity<>(childCategoryService.findById(id), HttpStatus.OK);
     }
 
-//    @GetMapping("/category-by-user")
-//    public ResponseEntity showUserCategory() {
-//        return new ResponseEntity(childCategoryService.showExpenseCategories(), HttpStatus.OK);
-//    }
+    @GetMapping("/category-by-user")
+    public ResponseEntity showUserCategory() {
+        return new ResponseEntity(childCategoryService.showExpenseCategories(), HttpStatus.OK);
+    }
 
     @PostMapping()
     public ResponseEntity<Optional<ChildCategory>> save(@RequestBody ChildCategory childCategory) {
@@ -64,15 +65,15 @@ public class ChildCategoryController {
     }
 
 
-//    @GetMapping("/getChildCategory/{id}")
-//    public ResponseEntity<Iterable<ChildCategory>> getChildCategoryByParentCategory(@PathVariable("id") Long id) {
-//        Optional<ParentCategory> parentCategory1 = parentCategoryService.findById(id);
-//        if (!parentCategory1.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        Iterable<ChildCategory> childCategories = childCategoryService.findAllByParentCategory(parentCategory1.get());
-//        return new ResponseEntity<>(childCategories, HttpStatus.OK);
-//
-//    }
+    @GetMapping("/getChildCategory/{id}")
+    public ResponseEntity<Iterable<ChildCategory>> getChildCategoryByParentCategory(@PathVariable("id") Long id) {
+        Optional<ParentCategory> parentCategory1 = parentCategoryService.findById(id);
+        if (!parentCategory1.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        Iterable<ChildCategory> childCategories = childCategoryService.findAllByParentCategory(parentCategory1.get());
+        return new ResponseEntity<>(childCategories, HttpStatus.OK);
+
+    }
 
 }
