@@ -50,7 +50,7 @@ function getChildCategory() {
         headers: {
             Authorization: 'Bearer ' + localStorage.getItem('token')
         },
-        url: "http://localhost:8086/child-categories",
+        url: "http://localhost:8086/categories",
         success: function (data) {
             let str = "";
             for (let i = 0; i < data.length; i++) {
