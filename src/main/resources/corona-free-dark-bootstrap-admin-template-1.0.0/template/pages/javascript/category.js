@@ -34,7 +34,7 @@ function getCategory(categories) {
                    <td>${categories.id}</td>
                    <td>${categories.name}</td>
                    <td>${categories.parentCategory.name}</td>
-                   <td><button type="button" class="btn btn-outline-success btn-fw" onclick="editCategory()">Edit</button></td>
+                   <td><button type="button" class="btn btn-outline-success btn-fw" onclick="showEditForm(${categories.id})">Edit</button></td>     
                    <td><button type="button" class="btn btn-outline-danger btn-fw" onclick="showDeleteForm(${categories.id})">Delete</button></td>
                    </tr>`
 }
@@ -95,10 +95,6 @@ function createCategory() {
 }
 
 
-
-
-
-
 function showAddForm() {
     $("#addModal").modal("show");
     showAllCategoryType()
@@ -111,7 +107,7 @@ function searchCategory() {
     let searchName = document.getElementById("search");
     $.ajax({
         type: "GET",
-        headers:{
+        headers: {
             Authorization: 'Bearer ' + localStorage.getItem("token")
         },
         url: "http://localhost:8086/getChildCategory/" + searchName.value,
@@ -121,51 +117,26 @@ function searchCategory() {
     });
 }
 
+let editId = 0;
+
+
 //hàm sửa
 function update() {
-    let id = document.getElementById("id").value;
-    let name = document.getElementById("category-name").value;
-    let type = document.getElementById("category-type").value;
+    // let id = document.getElementById("id").value;
 
+    document.getElementById('id').value = id;
+    let name1 = document.getElementById("category-name").value;
+    let type1 = document.getElementById("category-type").value;
 
-
-    let newCategory = {
-        name: name,
-        parentCategory: {
-            id: type
-        }
-    };
-
-
-    $.ajax({
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        type: "PUT",
-        enctype: 'multipart/form-data',
-        url: "http://localhost:8086/categories/" + id,
-        data: JSON.stringify(newCategory),
-        success: function () {
-            alert("Edit successfully !")
-            showAllCategory();
-            $('#editModal').modal('hide');
-
-        },
-        errors: function (error) {
-            console.log(error)
-        }
-    })
-}
-
-function editCategory() {
 
     let newCategory2 = {
-        name: name,
+        name: name1,
         parentCategory: {
-            id: category-type
+            id: type1
         }
     };
+
+
     $.ajax({
         headers: {
             'Accept': 'application/json',
@@ -179,19 +150,17 @@ function editCategory() {
             alert("Edit successfully !")
             showAllCategory();
             $('#editModal').modal('hide');
-
         },
         errors: function (error) {
             console.log(error)
         }
     })
-    $("#editModal").modal("show");
-    showAllCategoryType2()
-
 }
 
+function showEditForm(editId) {
+    id = editId;
+    $('#editModal').modal('show');
 
-function showEditForm() {
-    $("#editModal").modal("show");
-    showAllCategoryType()
+    showAllCategoryType2()
+
 }
