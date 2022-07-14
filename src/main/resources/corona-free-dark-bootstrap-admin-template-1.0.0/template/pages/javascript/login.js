@@ -36,4 +36,11 @@ function login() {
     })
 }
 
+function logout() {
+    token = ""
+    id = ""
+    localStorage.setItem("token", token)
+    localStorage.setItem("id", id)
+    window.location.href="pages/samples/login.html"
 
+}
